@@ -1,8 +1,12 @@
 # Model
-model_name: ./hugging_cache/gpt2-xl
+#model_name: ./hugging_cache/gpt2-xl
+#model_name: openai-community/gpt2-xl
+model_name: hugging_cache/gpt2-xl
 model_class: GPT2LMHeadModel
 tokenizer_class: GPT2Tokenizer
-tokenizer_name: ./hugging_cache/gpt2-xl
+#tokenizer_name: ./hugging_cache/gpt2-xl
+tokenizer_name: hugging_cache/gpt2-xl
+#tokenizer_name: openai-community/gpt2-xl
 model_parallel: false
 inner_params:
 - transformer.h.45.mlp.c_proj.weight
@@ -40,7 +44,8 @@ mlp_class: IDMLP
 shared: True
 
 # Train
-device: cuda:5
+# device: cuda:5
+device: cuda:0
 batch_size: 1
 model_save_pt: 5000
 silent: False

@@ -1,6 +1,9 @@
+#-*- coding : utf-8-*-
+# coding:unicode_escape
 import json
 from pathlib import Path
 
+import chardet
 import torch
 from torch.utils.data import Dataset
 import typing
@@ -17,10 +20,17 @@ class ZsreDataset(Dataset):
     Specifically selected from the QA validation slice from Mitchell et al.
     Project page: http://nlp.cs.washington.edu/zeroshot/
     """
+    #pythonCopy codeimport chardet
+    @staticmethod
+    def get_file_encoding(file_path):
+        with open(file_path, 'rb') as f:
+            result = chardet.detect(f.read())
+        return result['encoding']
 
     def __init__(self, data_dir: str, size: typing.Optional[int] = None, config=None, *args, **kwargs):
         data_dir = Path(data_dir)
         zsre_loc = data_dir
+
 
         if config is not None:
             self.config = config
@@ -56,8 +66,15 @@ class ZsreDataset(Dataset):
                 # print('QwenTokenizer Detected, Set pad token id and left padding!!!')
             self.tok = tokenizer
 
-        with open(zsre_loc, "r") as f:
+        #with open(zsre_loc, "r") as f:
+        #    raw = json.load(f)
+
+        with open(zsre_loc, "r", encoding=ZsreDataset.get_file_encoding(zsre_loc)) as f:
             raw = json.load(f)
+
+
+
+
 
         data = []
         for i, record in enumerate(raw):

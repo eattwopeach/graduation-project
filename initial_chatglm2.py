@@ -1,0 +1,11 @@
+from transformers import AutoModelForCausalLM, AutoTokenizer, AutoModel
+tokenizer = AutoTokenizer.from_pretrained('hugging_cache/chatglm2-6', trust_remote_code=True)
+model = AutoModel.from_pretrained("hugging_cache/chatglm2-6", trust_remote_code=True).half().cuda()
+model = model.eval()
+response, history = model.chat(tokenizer, "What does Substitude mean?", history=[])
+print(response)
+response, history = model.chat(tokenizer, "What does twinway mean?", history=[])
+print(response)
+response, history = model.chat(tokenizer, "What does Deheat mean?", history=[])
+print(response)
+print()
